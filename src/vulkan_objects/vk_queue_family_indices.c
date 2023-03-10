@@ -81,13 +81,13 @@ vk_queue_family_indices vk_queue_family_indices_create(const VkPhysicalDevice *p
     vk_queue_family_indices q_fly_idx;
 
     q_fly_idx.gfx = gfx;
-    q_fly_idx.num_q_gfx = num_q_gfx;
+    q_fly_idx.gfx_max_q_count = num_q_gfx;
 
     q_fly_idx.cmpt = cmpt;
-    q_fly_idx.num_q_cmpt = num_q_cmpt;
+    q_fly_idx.cmpt_max_q_count = num_q_cmpt;
 
     q_fly_idx.xfer = xfer;
-    q_fly_idx.num_q_xfer = num_q_xfer;
+    q_fly_idx.xfer_max_q_count = num_q_xfer;
     
     return q_fly_idx;
 }

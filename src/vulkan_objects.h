@@ -3,6 +3,8 @@
 #include "vulkan_objects/vk_instance.h"
 #include "vulkan_objects/vk_physical_device.h"
 #include "vulkan_objects/vk_queue_family_indices.h"
+#include "vulkan_objects/vk_queue_create_info_infos.h"
+#include "vulkan_objects/vk_queue_create_infos.h"
 #include "vulkan_objects/vk_surface.h"
 #include "vulkan_objects/vk_device.h"
 #include "vulkan_objects/vk_device_queues.h"

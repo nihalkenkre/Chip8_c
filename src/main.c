@@ -12,7 +12,7 @@ LRESULT CALLBACK WindowProc(HWND h_wnd, UINT msg, WPARAM w_param, LPARAM l_param
 {
     OutputDebugString(L"WindowProc\n");
     return DefWindowProc(h_wnd, msg, w_param, l_param);
-
+/*
     RECT client_rect;
     GetClientRect(h_wnd, &client_rect);
 
@@ -40,58 +40,59 @@ LRESULT CALLBACK WindowProc(HWND h_wnd, UINT msg, WPARAM w_param, LPARAM l_param
     case WM_KEYUP:
         OutputDebugString(L"key up\n");
         break;
-        /*
-            case WM_TIMER:
-                OutputDebugString(L"timer\n");
-                cpu_execute(cpu_obj);
-                InvalidateRect(h_wnd, &client_rect, TRUE);
-                break;
 
-            case WM_PAINT:
-                OutputDebugString(L"Paint\n");
-                PAINTSTRUCT ps;
-                HDC hdc = BeginPaint(h_wnd, &ps);
+    case WM_TIMER:
+        OutputDebugString(L"timer\n");
+        cpu_execute(cpu_obj);
+        InvalidateRect(h_wnd, &client_rect, TRUE);
+        break;
 
-                int chip_8_to_win32_scale = 16;
+    case WM_PAINT:
+        OutputDebugString(L"Paint\n");
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(h_wnd, &ps);
 
-                for (unsigned char y = 0; y < 32; ++y)
+        int chip_8_to_win32_scale = 16;
+
+        for (unsigned char y = 0; y < 32; ++y)
+        {
+            for (unsigned char x = 0; x < 64; ++x)
+            {
+                if (display_obj->pixels[y * 64 + x] == 1)
                 {
-                    for (unsigned char x = 0; x < 64; ++x)
-                    {
-                        if (display_obj->pixels[y * 64 + x] == 1)
-                        {
-                            wchar_t buff[256];
-                            OutputDebugString(buff);
-                            RECT draw_rect;
-                            draw_rect.left = chip_8_to_win32_scale * x;
-                            draw_rect.top = chip_8_to_win32_scale * y;
-                            draw_rect.bottom = chip_8_to_win32_scale * (y + 1);
-                            draw_rect.right = chip_8_to_win32_scale * (x + 1);
+                    wchar_t buff[256];
+                    OutputDebugString(buff);
+                    RECT draw_rect;
+                    draw_rect.left = chip_8_to_win32_scale * x;
+                    draw_rect.top = chip_8_to_win32_scale * y;
+                    draw_rect.bottom = chip_8_to_win32_scale * (y + 1);
+                    draw_rect.right = chip_8_to_win32_scale * (x + 1);
 
-                            FillRect(hdc, &draw_rect, CreateSolidBrush(RGB(255, 255, 255)));
-                        }
-                        else if (display_obj->pixels[y * 64 + x] == 0)
-                        {
-                            /*wchar_t buff[256];
-                            swprintf (buff, 256, L"0 %d %d\n", x, y);
-                            OutputDebugString (buff);
-                            RECT draw_rect;
-                            draw_rect.left = chip_8_to_win32_scale * x;
-                            draw_rect.top = chip_8_to_win32_scale * y;
-                            draw_rect.bottom = chip_8_to_win32_scale * (y + 1);
-                            draw_rect.right = chip_8_to_win32_scale * (x + 1);
-
-                            FillRect(hdc, &draw_rect, CreateSolidBrush(RGB(0, 0, 0)));
-                        }
-                    }
+                    FillRect(hdc, &draw_rect, CreateSolidBrush(RGB(255, 255, 255)));
                 }
+                else if (display_obj->pixels[y * 64 + x] == 0)
+                {
+                    wchar_t buff[256];
+                    swprintf(buff, 256, L"0 %d %d\n", x, y);
+                    OutputDebugString(buff);
+                    RECT draw_rect;
+                    draw_rect.left = chip_8_to_win32_scale * x;
+                    draw_rect.top = chip_8_to_win32_scale * y;
+                    draw_rect.bottom = chip_8_to_win32_scale * (y + 1);
+                    draw_rect.right = chip_8_to_win32_scale * (x + 1);
 
-                EndPaint(h_wnd, &ps);
-                break;
-        */
+                    FillRect(hdc, &draw_rect, CreateSolidBrush(RGB(0, 0, 0)));
+                }
+            }
+        }
+
+        EndPaint(h_wnd, &ps);
+        break;
+
     default:
         break;
     }
+*/
 }
 
 int WINAPI wWinMain(_In_ HINSTANCE h_instance, _In_opt_ HINSTANCE previous_instance, _In_ PWSTR cmd_line, _In_ int cmd_show)
@@ -134,8 +135,6 @@ int WINAPI wWinMain(_In_ HINSTANCE h_instance, _In_opt_ HINSTANCE previous_insta
     char *path = "./build32/vscode/debug/IBM_Logo.ch8";
     cpu *c = cpu_create(h_instance, h_wnd);
 
-    //cpu c(h_instance, h_wnd);
-
     SetTimer(h_wnd, ID_GAME_TICK, 1000, NULL);
 
     MSG msg;
@@ -157,13 +156,11 @@ int WINAPI wWinMain(_In_ HINSTANCE h_instance, _In_opt_ HINSTANCE previous_insta
             if (msg.message == WM_PAINT)
             {
                 OutputDebugString(L"Paint\n");
-                //c.draw();
             }
             else if (msg.message == WM_TIMER)
             {
                 OutputDebugString(L"Timer\n");
                 InvalidateRect(h_wnd, &client_rect, TRUE);
-                //c.execute();
             }
             else
             {
